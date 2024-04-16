@@ -1,10 +1,11 @@
 
 import { Link } from "react-router-dom";
 import Navbar from "../shared/Navbar/Navbar";
-import { PiPassword } from "react-icons/pi";
-
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProviders";
 
 const Register = () => {
+    const { createUser } = useContext(AuthContext);
 
     const handleRegister = (e) => {
         e.preventDefault();
@@ -16,9 +17,15 @@ const Register = () => {
         const email = form.get('email');
         const password = form.get('password');
 
+        console.log(name, photo, email, password);
 
-
-        console.log(name, photo,email, password);
+        createUser(email, password)
+            .then(result => {
+                console.log(result.user)
+            })
+            .catch(error => {
+                console.error(error);
+            })
     }
 
 
@@ -50,8 +57,8 @@ const Register = () => {
                         </label>
                         <input type="email" name="email" placeholder="email" className="input input-bordered" required />
                     </div>
-                    
-                    
+
+
 
                     <div className="form-control">
                         <label className="label">
